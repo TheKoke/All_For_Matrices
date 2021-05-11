@@ -18,7 +18,7 @@ namespace Drogergous.SystemLinearEquations
 
             Inverse = OperationsOnMatrix.ChangeMatrix.InverseMatrix(Matrix);
 
-            int[,] ResultMultiplication = OperationsOnMatrix.MatrixMath.TwoMatrices.Multiplication(Inverse, FreeNums);
+            int[,] ResultMultiplication = MatrixMath.TwoMatrices.Multiplication(Inverse, FreeNums);
 
             Solutins = new int[FreeNums.Length];
 
