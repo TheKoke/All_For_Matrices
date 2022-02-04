@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,137 +6,100 @@ namespace Drogergous
 {
     class Gauss_Jordan
     {
-        //Поле для копирования матрицы системы для расчетов внутри класса
         private double[,] Clone_Matrix;
 
-        //Сеттер для единственного поля
-        private void SetClone(double[,] SoE_Matrix)
+        private void SetClone(double[,] SLE_Matrix)
         {
-            Clone_Matrix = new double[SoE_Matrix.GetLength(0), SoE_Matrix.GetLength(1)];
+            Clone_Matrix = new double[SLE_Matrix.GetLength(0), SLE_Matrix.GetLength(1)];
 
-            for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
+            for (int i = 0; i < SLE_Matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < SoE_Matrix.GetLength(1); j++)
+                for (int j = 0; j < SLE_Matrix.GetLength(1); j++)
                 {
-                    Clone_Matrix[i, j] = SoE_Matrix[i, j];
+                    Clone_Matrix[i, j] = SLE_Matrix[i, j];
                 }
             }
         }
 
-        /// <summary>
-        /// Метод "Прямой ход", преоборазование главной диагонали в единичную
-        /// </summary>
-        private void DirectDivision(double[,] SoE_Matrix)
+        private void DirectDivision(double[,] SLE_Matrix)
         {
-            SetClone(SoE_Matrix);
+            SetClone(SLE_Matrix);
 
-            for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
+            for (int i = 0; i < SLE_Matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < SoE_Matrix.GetLength(1); j++)
+                for (int j = 0; j < SLE_Matrix.GetLength(1); j++)
                 {
-                    Clone_Matrix[i, j] = Clone_Matrix[i, j] / SoE_Matrix[i, i];
+                    Clone_Matrix[i, j] = Clone_Matrix[i, j] / SLE_Matrix[i, i];
                 }
             }
         }
 
-        /// <summary>
-        /// Метод "Обратный ход", обратное превращение главной диагонали в единичную
-        /// </summary>
-        private void ReverseDivision(double[,] SoE_Matrix)
+        private void ReverseDivision(double[,] SLE_Matrix)
         {
-            SetClone(SoE_Matrix);
+            SetClone(SLE_Matrix);
 
-            for (int i = SoE_Matrix.GetLength(0) - 1; i > -1; i--)
+            for (int i = SLE_Matrix.GetLength(0) - 1; i > -1; i--)
             {
-                for (int j = SoE_Matrix.GetLength(0); j > -1; j--)
+                for (int j = SLE_Matrix.GetLength(0); j > -1; j--)
                 {
-                    Clone_Matrix[i, j] = Clone_Matrix[i, j] / SoE_Matrix[i, i];
+                    Clone_Matrix[i, j] = Clone_Matrix[i, j] / SLE_Matrix[i, i];
                 }
             }
         }
 
-        /// <summary>
-        /// Метод Зануления левого нижнего угла матрицы системы
-        /// </summary>
-        private double[,] VanishingLeft(double[,] SoE_Matrix)
+        private double[,] VanishingLeft(double[,] SLE_Matrix)
         {
             DirectDivision(SoE_Matrix);
 
             double Koeff;
 
-            for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
+            for (int i = 0; i < SLE_Matrix.GetLength(0); i++)
             {
-                for (int j = i + 1; j < SoE_Matrix.GetLength(0); j++)
+                for (int j = i + 1; j < SLE_Matrix.GetLength(0); j++)
                 {
                     Koeff = Clone_Matrix[j, i] / Clone_Matrix[i, i];
 
-                    for (int l = 0; l < SoE_Matrix.GetLength(1); l++)
+                    for (int l = 0; l < SLE_Matrix.GetLength(1); l++)
                     {
                         Clone_Matrix[j, l] -= Clone_Matrix[i, l] * Koeff;
                     }
                 }
             }
 
-            double[,] Result = new double[SoE_Matrix.GetLength(0), SoE_Matrix.GetLength(1)];
-
-            for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < SoE_Matrix.GetLength(1); j++)
-                {
-                    Result[i, j] = Clone_Matrix[i, j];
-                }
-            }
-
-            return Result;
+            return Clone_Matrix;
         }
 
-        /// <summary>
-        /// Метод Зануление правого верхнего угла матрицы системы
-        /// </summary>
-        private double[,] VanishingRight(double[,] SoE_Matrix)
+        private double[,] VanishingRight(double[,] SLE_Matrix)
         {
-            ReverseDivision(VanishingLeft(SoE_Matrix));
+            ReverseDivision(VanishingLeft(SLE_Matrix));
 
             double koeff;
 
-            for (int i = SoE_Matrix.GetLength(0) - 1; i > -1; i--)
+            for (int i = SLE_Matrix.GetLength(0) - 1; i > -1; i--)
             {
                 for (int j = i - 1; j > -1; j--)
                 {
                     koeff = Clone_Matrix[j, i] / Clone_Matrix[i, i];
 
-                    for (int k = SoE_Matrix.GetLength(0); k > -1; k--)
+                    for (int k = SLE_Matrix.GetLength(0); k > -1; k--)
                     {
                         Clone_Matrix[j, k] = Clone_Matrix[j, k] - Clone_Matrix[i, k] * koeff;
                     }
                 }
             }
 
-            double[,] Result = new double[SoE_Matrix.GetLength(0), SoE_Matrix.GetLength(1)];
-
-            for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < SoE_Matrix.GetLength(1); j++)
-                {
-                    Result[i, j] = Clone_Matrix[i, j];
-                }
-            }
-
-            return Result;
+            return Clone_Matrix;
         }
 
-        /// <summary>
-        /// Метод возвращающий решения системы
-        /// </summary
-        public double[] GetSolutions(int[,] SoE_Matrix)
+        public double[] GetSolutions(int[,] SLE_Matrix)
         {
-            double[,] SMatrix = new double[SoE_Matrix.GetLength(0), SoE_Matrix.GetLength(1)];
+            double[,] SMatrix = new double[SLE_Matrix.GetLength(0), SLE_Matrix.GetLength(1)];
 
-            for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
+            for (int i = 0; i < SLE_Matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < SoE_Matrix.GetLength(1); j++)
+                for (int j = 0; j < SLE_Matrix.GetLength(1); j++)
                 {
-                    SMatrix[i, j] = SoE_Matrix[i, j];
+                    SMatrix[i, j] = SLE_Matrix[i, j];
                 }
             }
 
