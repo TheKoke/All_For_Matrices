@@ -93,25 +93,15 @@ namespace Drogergous
 
         public double[] GetSolutions(int[,] SLE_Matrix)
         {
-            double[,] SMatrix = new double[SLE_Matrix.GetLength(0), SLE_Matrix.GetLength(1)];
+            SLE_Matrix = VanishingLeft(SLE_Matrix);
 
-            for (int i = 0; i < SLE_Matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < SLE_Matrix.GetLength(1); j++)
-                {
-                    SMatrix[i, j] = SLE_Matrix[i, j];
-                }
-            }
+            SLE_Matrix = VanishingRight(SLE_Matrix);
 
-            double[,] VanishMatrix = VanishingLeft(SMatrix);
-
-            VanishMatrix = VanishingRight(VanishMatrix);
-
-            double[] Solutions = new double[SoE_Matrix.GetLength(0)];
+            double[] Solutions = new double[SLE_Matrix.GetLength(0)];
 
             for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
             {
-                Solutions[i] = VanishMatrix[i, SoE_Matrix.GetLength(0)];                
+                Solutions[i] = VanishMatrix[i, SLE_Matrix.GetLength(0)];                
             }
 
             return Solutions;
