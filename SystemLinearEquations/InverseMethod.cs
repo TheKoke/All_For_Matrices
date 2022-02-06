@@ -16,7 +16,7 @@ namespace Drogergous.SystemLinearEquations
                 throw new Exception("Определитель равен нулю, используйте метод Гаусса-Жордана");
             }
 
-            Inverse = OperationsOnMatrix.ChangeMatrix.InverseMatrix(Matrix);
+            Inverse = OperationsOnMatrix.MatrixChanger.InverseMatrix(Matrix);
 
             int[,] ResultMultiplication = MatrixMath.TwoMatrices.Multiplication(Inverse, FreeNums);
 
