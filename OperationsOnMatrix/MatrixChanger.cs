@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Drogergous.OperationsOnMatrix
 {
-    class ChangeMatrix
+    class MatrixChanger
     {
         private static int[,] Changed;
 
-        /// <summary>
-        /// Метод находящий транспонираванную матрицу
-        /// </summary>
         public static int[,] TransMatrix(int[,] Matrix)
         {
             Changed = new int[Matrix.GetLength(0), Matrix.GetLength(1)];
@@ -26,9 +21,6 @@ namespace Drogergous.OperationsOnMatrix
             return Changed;
         }
 
-        /// <summary>
-        /// Метод находящий дополненную матрицу
-        /// </summary>
         public static int[,] AddJointMatrix(int[,] Matrix)
         {
             Changed = new int[Matrix.GetLength(0), Matrix.GetLength(1)];
@@ -46,9 +38,6 @@ namespace Drogergous.OperationsOnMatrix
             return Changed;
         }
 
-        /// <summary>
-        /// Метод находящий обратную матрицу
-        /// </summary>
         public static float[,] InverseMatrix(int[,] Matrix)
         {
             Changed = AddJointMatrix(Matrix);
