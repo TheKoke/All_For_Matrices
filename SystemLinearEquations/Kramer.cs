@@ -9,7 +9,7 @@ namespace Drogergous.SystemAlgebraicEquations
         private int[,] System_Matrix;
         private int[] Deltas;
 
-        public int Size { get; set; }
+        public int Size { get; private set; }
 
         public Kramer(int size)
         {
@@ -18,20 +18,18 @@ namespace Drogergous.SystemAlgebraicEquations
 
         private void SetDeltas(int[,] Matrix, int[] FreeNums)
         {
-            System_Matrix = (int[,])Matrix.Clone();
-
             Deltas = new int[Size];
 
             for (int i = 0; i < Size; i++)
             {
+                System_Matrix = (int[,])Matrix.Clone();
+                
                 for (int j = 0; j < Size; j++)
                 {
                     System_Matrix[j, i] = FreeNums[j];
                 }
 
                 Deltas[i] = OperationsOnMatrix.Determinants.Resolve(System_Matrix);
-
-                System_Matrix = (int[,])Matrix.Clone();
             }
         }
 
