@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Drogergous.Matrices
 {
@@ -8,21 +6,21 @@ namespace Drogergous.Matrices
     {
         private int[,] PerSymmetricMatrix;
        
-        private void SetMatrix(int[,] Matrix)
+        public Persymmetric(int[,] Sample)
         {
-            Size = Matrix.GetLength(0);
+            Size = Sample.GetLength(0);
             PerSymmetricMatrix = GetExchange();
         }
 
-        private void SetDiagonal(int[,] Matrix)
+        private void SetDiagonal(int[,] Sample)
         {
             for (int i = 0; i < PerSymmetricMatrix.GetLength(0); i++)
             {
-                for (int j = 0; j < PerSymmetricMatrix.GetLength(0); j++)
+                for (int j = 0; j < PerSymmetricMatrix.GetLength(1); j++)
                 {
                     if (i + j == PerSymmetricMatrix.GetLength(0) - 1)
                     {
-                        PerSymmetricMatrix[i, j] = Matrix[i, j];
+                        PerSymmetricMatrix[i, j] = Sample[i, j];
                     }
                 }
             }
@@ -30,9 +28,7 @@ namespace Drogergous.Matrices
 
         public int[,] GetMatrix(int[,] Matrix)
         {
-            SetMatrix(Matrix);
             SetDiagonal(Matrix);
-
             return PerSymmetricMatrix;
         }
     }
