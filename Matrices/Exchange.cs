@@ -7,7 +7,7 @@ namespace Drogergous.Matrices
     class Exchange
     {
         private int[,] ExchangeMatrix;
-        public int Size { get; private set; }
+        public int Size { get; protected set; }
         
         public Echange(int size)
         {
