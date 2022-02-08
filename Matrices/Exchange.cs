@@ -7,7 +7,12 @@ namespace Drogergous.Matrices
     class Exchange
     {
         private int[,] ExchangeMatrix;
-        public int Size { get; set; }
+        public int Size { get; private set; }
+        
+        public Echange(int size)
+        {
+            this.Size = size;
+        }  
 
         public int[,] GetExchange()
         {
@@ -17,14 +22,9 @@ namespace Drogergous.Matrices
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    if (i + j == Size - 1)//Обозначение побочной диагонали матрицы
+                    if (i + j == Size - 1)
                     {
                         ExchangeMatrix[i, j] = 1;
-                    }
-                    else
-                    {
-                        //приравнивание симметричных элементов, относительно побочной диагонали
-                        ExchangeMatrix[i, j] = ExchangeMatrix[Size - j - 1, Size - i - 1];
                     }
                 }
             }
