@@ -7,7 +7,12 @@ namespace Drogergous.Matrices
     class Single
     {
         private int[,] SingleMatrix;
-        public int Size { get; set; }
+        public int Size { get; private set; }
+        
+        public Single(int size)
+        {
+            this.Size = size;
+        }
 
         public int[,] GetSingle()
         {
