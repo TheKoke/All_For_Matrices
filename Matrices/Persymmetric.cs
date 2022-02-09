@@ -12,23 +12,55 @@ namespace Drogergous.Matrices
             PerSymmetricMatrix = GetExchange();
         }
 
-        private void SetDiagonal(int[,] Sample)
+        public int[,] GetUpperMatrix(int[,] Matrix)
         {
-            for (int i = 0; i < PerSymmetricMatrix.GetLength(0); i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < PerSymmetricMatrix.GetLength(1); j++)
+                for (int j = 0; j < Size; j++)
                 {
-                    if (i + j == PerSymmetricMatrix.GetLength(0) - 1)
+                    if (i + j == Size - 1)
                     {
-                        PerSymmetricMatrix[i, j] = Sample[i, j];
+                        PerSymmetricMatrix[i, j] = Matrix[i, j];
+                    }
+                    
+                    if (i + j <= Size - 2)
+                    {
+                        PerSymmetricMatrix[i, j] = Matrix[i, j];
+                    }
+                    
+                    if (i + j >= Size - 2)
+                    {
+                        PerSymmertricMatrix[i, j] = Matrix[Size - i - 1, Size - j - 1];
                     }
                 }
             }
+            
+            return PerSymmetricMatrix;
         }
-
-        public int[,] GetMatrix(int[,] Matrix)
+        
+        public int[,] GetLowerMatrix(int[,] Matrix)
         {
-            SetDiagonal(Matrix);
+            for (int i = Size - 1; i >= 0; i--)
+            {
+                for (int j = Size - 1; j >= 0; j--)
+                {
+                    if (i + j == Size - 1)
+                    {
+                        PerSymmetricMatrix[i, j] = Matrix[i, j];
+                    }
+                    
+                    if (i + j >= Size - 2)
+                    {
+                        PerSymmetricMatrix[i, j] = Matrix[i, j];
+                    }
+                    
+                    if (i + j <= Size - 2)
+                    {
+                        PerSymmertricMatrix[i, j] = Matrix[Size - i - 1, Size - j - 1];
+                    }
+                }
+            }
+            
             return PerSymmetricMatrix;
         }
     }
