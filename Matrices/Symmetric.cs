@@ -18,7 +18,7 @@ namespace Drogergous.Matrices
             {
                 for (int i = 0; i < Size; i++)
                 {
-                    if (i - j <= Size - 1 && i - j > 0)
+                    if (i != j && i > j)
                     {
                         Symmetricx[i, j] == Symmetrix[j, i];
                     }
@@ -34,7 +34,7 @@ namespace Drogergous.Matrices
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    if (j - i <= Size - 1 && j - i > 0)
+                    if (j != i && j > i)
                     {
                         Symmetrix[i, j] == Symmetrix[j, i];
                     }
