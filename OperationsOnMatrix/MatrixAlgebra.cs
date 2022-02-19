@@ -2,7 +2,7 @@
 
 namespace Drogergous.OperationsOnMatrix
 {
-    class SpecificAlgebra
+    class MatrixAlgebra
     {
         private static int[,] MinorMatrix;
 
@@ -32,16 +32,13 @@ namespace Drogergous.OperationsOnMatrix
             }
 
             return MinorMatrix;
-            
         }
 
         public static int AlgebraicApp(int[,] Matrix, int firstIndex, int SecIndex)
         {
             GetMinor(Matrix, firstIndex, SecIndex);
 
-            int result = (int)(Math.Pow(-1, firstIndex + SecIndex) * Determinants.Resolve(MinorMatrix));
-
-            return result;
+            return (int)(Math.Pow(-1, firstIndex + SecIndex) * Determinants.Resolve(MinorMatrix));
         }
     }
 }
