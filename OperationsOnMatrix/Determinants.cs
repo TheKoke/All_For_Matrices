@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Drogergous.OperationsOnMatrix
 {
@@ -31,29 +29,25 @@ namespace Drogergous.OperationsOnMatrix
 
         public static int Resolve(int[,] Matrix)
         {
-            int result = 0;
-
             if (Matrix.GetLength(0) == 2)
             {
-                result += Second_Order(Matrix);
+                return Second_Order(Matrix);
             }
-            else
+            
+            int result = 0;
+            for (int i = 0; i < Matrix.GetLength(0); i++)
             {
-                for (int i = 0; i < Matrix.GetLength(0); i++)
+                if (i % 2 == 0)
                 {
-                    if (i % 2 == 0)
-                    {
-                        result += Matrix[0, i] * Resolve(MatrixAlgebra.GetMinor(Matrix, 0, i));
-                    }
-                    else
-                    {
-                        result -= Matrix[0, i] * Resolve(MatrixAlgebra.GetMinor(Matrix, 0, i));
-                    }
+                    result += Matrix[0, i] * Resolve(MatrixAlgebra.GetMinor(Matrix, 0, i));
+                }
+                else
+                {
+                    result -= Matrix[0, i] * Resolve(MatrixAlgebra.GetMinor(Matrix, 0, i));
                 }
             }
 
             return result;
         }
-
     }
 }
