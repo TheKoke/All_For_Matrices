@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Drogergous
 {
@@ -49,15 +47,13 @@ namespace Drogergous
 
         private double[,] VanishingLeft(double[,] SLE_Matrix)
         {
-            DirectDivision(SoE_Matrix);
-
-            double Koeff;
+            DirectDivision(SLE_Matrix);
 
             for (int i = 0; i < SLE_Matrix.GetLength(0); i++)
             {
                 for (int j = i + 1; j < SLE_Matrix.GetLength(0); j++)
                 {
-                    Koeff = Clone_Matrix[j, i] / Clone_Matrix[i, i];
+                    double Koeff = Clone_Matrix[j, i] / Clone_Matrix[i, i];
 
                     for (int l = 0; l < SLE_Matrix.GetLength(1); l++)
                     {
@@ -73,15 +69,13 @@ namespace Drogergous
         {
             ReverseDivision(VanishingLeft(SLE_Matrix));
 
-            double koeff;
-
             for (int i = SLE_Matrix.GetLength(0) - 1; i > -1; i--)
             {
                 for (int j = i - 1; j > -1; j--)
                 {
-                    koeff = Clone_Matrix[j, i] / Clone_Matrix[i, i];
+                    double koeff = Clone_Matrix[j, i] / Clone_Matrix[i, i];
 
-                    for (int k = SLE_Matrix.GetLength(0); k > -1; k--)
+                    for (int k = SLE_Matrix.GetLength(0); k >= 0; k--)
                     {
                         Clone_Matrix[j, k] = Clone_Matrix[j, k] - Clone_Matrix[i, k] * koeff;
                     }
@@ -93,15 +87,12 @@ namespace Drogergous
 
         public double[] GetSolutions(int[,] SLE_Matrix)
         {
-            SLE_Matrix = VanishingLeft(SLE_Matrix);
-
-            SLE_Matrix = VanishingRight(SLE_Matrix);
+            SLE_Matrix = VanishingRight(VanishingLeft(SLE_Matrix));
 
             double[] Solutions = new double[SLE_Matrix.GetLength(0)];
-
             for (int i = 0; i < SoE_Matrix.GetLength(0); i++)
             {
-                Solutions[i] = VanishMatrix[i, SLE_Matrix.GetLength(0)];                
+                Solutions[i] = SLE_Matrix[i, SLE_Matrix.GetLength(0)];                
             }
 
             return Solutions;
